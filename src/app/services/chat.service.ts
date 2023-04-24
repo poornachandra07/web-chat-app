@@ -9,7 +9,13 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ChatService {
 
-   private  connection: any = new signalR.HubConnectionBuilder().withUrl("https://localhost:7051/signalr")   // mapping to the chathub as in startup.cs
+   private  connection: any = new signalR.HubConnectionBuilder().withUrl("https://localhost:7051/signalr"
+   ,
+   {
+    skipNegotiation: true,
+    transport: signalR.HttpTransportType.WebSockets
+  }
+  )   // mapping to the chathub as in startup.cs
                                          .configureLogging(signalR.LogLevel.Information)
                                          .build();
    readonly POST_URL = "https://localhost:7051/api/Chat/PostChat"
@@ -50,8 +56,8 @@ export class ChatService {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
-    this.http.post(this.POST_URL, msgDto.msgText,httpOptions).subscribe(data => console.log(data));
-    // this.connection.invoke("SendMessage1", msgDto.user, msgDto.msgText).catch(err => console.error(err));    // This can invoke the server method named as "SendMethod1" directly.
+    this.http.post(this.POST_URL, msgDto,httpOptions).subscribe(data => console.log(data));
+     //this.connection.invoke("SendMessage", msgDto.user, msgDto.msgText).catch((err: any) => console.error(err));    // This can invoke the server method named as "SendMethod1" directly.
   }
 
   public retrieveMappedObject(): Observable<MessageDto> {
