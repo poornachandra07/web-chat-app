@@ -56,8 +56,8 @@ export class ChatService {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
-    //this.http.post(this.POST_URL, msgDto,httpOptions).subscribe(data => console.log(data));
-     this.connection.invoke("SendMessage", msgDto.user, msgDto.msgText).catch((err: any) => console.error(err));    // This can invoke the server method named as "SendMethod1" directly.
+    this.http.post(this.POST_URL, msgDto,httpOptions).subscribe(data => "");
+     //this.connection.invoke("SendMessage", msgDto.user, msgDto.msgText).catch((err: any) => console.error(err));    // This can invoke the server method named as "SendMethod1" directly.
   }
 
   public retrieveMappedObject(): Observable<MessageDto> {
